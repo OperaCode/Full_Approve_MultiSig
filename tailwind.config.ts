@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
+        sans: ["Space Grotesk", "system-ui", "sans-serif"],
+        mono: ["IBM Plex Mono", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -80,8 +80,8 @@ export default {
           to: { height: "0" },
         },
         "fade-up": {
-          from: { opacity: "0", transform: "translateY(16px)" },
-          to: { opacity: "1", transform: "translateY(0)" },
+          from: { opacity: "0", transform: "translateY(16px)", filter: "blur(4px)" },
+          to: { opacity: "1", transform: "translateY(0)", filter: "blur(0)" },
         },
         "fade-in": {
           from: { opacity: "0" },
@@ -89,15 +89,46 @@ export default {
         },
         "pulse-glow": {
           "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0.6" },
+          "50%": { opacity: "0.5" },
+        },
+        "float": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-8px)" },
+        },
+        "node-pulse": {
+          "0%, 100%": { boxShadow: "0 0 0 0 hsl(35 95% 56% / 0.4)" },
+          "50%": { boxShadow: "0 0 0 12px hsl(35 95% 56% / 0)" },
+        },
+        "block-stack": {
+          from: { transform: "translateY(20px) scale(0.95)", opacity: "0" },
+          to: { transform: "translateY(0) scale(1)", opacity: "1" },
+        },
+        "gradient-shift": {
+          "0%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+          "100%": { backgroundPosition: "0% 50%" },
+        },
+        "chain-flow": {
+          "0%": { backgroundPosition: "0% 0%" },
+          "100%": { backgroundPosition: "200% 0%" },
+        },
+        "hash-scroll": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "fade-up": "fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
+        "fade-up": "fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both",
         "fade-in": "fade-in 0.4s ease-out",
         "pulse-glow": "pulse-glow 2s ease-in-out infinite",
+        "float": "float 3s ease-in-out infinite",
+        "node-pulse": "node-pulse 2s ease-in-out infinite",
+        "block-stack": "block-stack 0.5s cubic-bezier(0.16, 1, 0.3, 1) both",
+        "gradient-shift": "gradient-shift 6s ease infinite",
+        "chain-flow": "chain-flow 3s linear infinite",
+        "hash-scroll": "hash-scroll 20s linear infinite",
       },
     },
   },

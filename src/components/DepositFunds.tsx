@@ -3,39 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowDownToLine } from "lucide-react";
 
-interface DepositFundsProps {
-  onDeposit: (amount: string) => Promise<void>;
-  balance: string;
-  disabled: boolean;
-}
-
-export function DepositFunds({ onDeposit, balance, disabled }: DepositFundsProps) {
+export function DepositFunds({ balance }: { balance: string }) {
   const [amount, setAmount] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-
-    if (!amount || parseFloat(amount) <= 0) {
-      setError("Amount must be greater than 0");
-      return;
-    }
-
-    setSubmitting(true);
-    try {
-      await onDeposit(amount);
-      setAmount("");
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Transaction failed");
-    } finally {
-      setSubmitting(false);
-    }
-  };
 
   return (
-    <form onSubmit={handleSubmit} className="rounded-xl border border-border bg-card p-6">
+    <div className="rounded-xl border border-border bg-card p-6">
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-lg font-semibold text-foreground">Deposit Funds</h3>
         <div className="text-right">
@@ -58,23 +30,18 @@ export function DepositFunds({ onDeposit, balance, disabled }: DepositFundsProps
             placeholder="0.00"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            className="font-mono bg-secondary border-border"
-            disabled={disabled}
+            className="font-mono bg-secondary/50 border-border"
           />
         </div>
 
-        {error && <p className="text-sm text-destructive">{error}</p>}
-
         <Button
-          type="submit"
           variant="outline"
-          disabled={disabled || submitting}
           className="w-full gap-2 border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground"
         >
           <ArrowDownToLine className="h-4 w-4" />
-          {submitting ? "Depositing…" : "Deposit ETH"}
+          Deposit ETH
         </Button>
       </div>
-    </form>
+    </div>
   );
 }
