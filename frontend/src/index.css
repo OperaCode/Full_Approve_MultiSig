@@ -1,0 +1,214 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+@layer base {
+  :root {
+    --background: 220 20% 97%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 35 95% 56%;
+    --primary-foreground: 222 47% 11%;
+
+    --secondary: 220 14% 92%;
+    --secondary-foreground: 222 47% 30%;
+
+    --muted: 220 14% 94%;
+    --muted-foreground: 220 10% 46%;
+
+    --accent: 256 75% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 13% 87%;
+    --input: 220 13% 87%;
+    --ring: 35 95% 56%;
+
+    --radius: 0.75rem;
+
+    --success: 160 60% 45%;
+    --warning: 35 95% 56%;
+    --info: 256 75% 60%;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 35 95% 56%;
+    --sidebar-primary-foreground: 222 47% 11%;
+    --sidebar-accent: 220 14% 94%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 220 13% 87%;
+    --sidebar-ring: 35 95% 56%;
+
+    --glow-primary: 35 95% 56%;
+    --glow-accent: 256 75% 60%;
+    --chain-color: 220 13% 80%;
+  }
+
+  .dark {
+    --background: 228 25% 8%;
+    --foreground: 213 31% 91%;
+
+    --card: 225 22% 12%;
+    --card-foreground: 213 31% 91%;
+
+    --popover: 225 22% 12%;
+    --popover-foreground: 213 31% 91%;
+
+    --primary: 35 95% 56%;
+    --primary-foreground: 228 25% 8%;
+
+    --secondary: 225 18% 18%;
+    --secondary-foreground: 213 20% 68%;
+
+    --muted: 225 15% 15%;
+    --muted-foreground: 220 10% 50%;
+
+    --accent: 268 76% 65%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 225 14% 20%;
+    --input: 225 14% 20%;
+    --ring: 35 95% 56%;
+
+    --success: 160 60% 45%;
+    --warning: 35 95% 56%;
+    --info: 268 76% 65%;
+
+    --sidebar-background: 225 22% 12%;
+    --sidebar-foreground: 213 31% 91%;
+    --sidebar-primary: 35 95% 56%;
+    --sidebar-primary-foreground: 228 25% 8%;
+    --sidebar-accent: 225 18% 18%;
+    --sidebar-accent-foreground: 213 31% 91%;
+    --sidebar-border: 225 14% 20%;
+    --sidebar-ring: 35 95% 56%;
+
+    --glow-primary: 35 95% 56%;
+    --glow-accent: 268 76% 65%;
+    --chain-color: 225 14% 24%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@layer utilities {
+  .font-mono {
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  /* Web3 Glow Effects */
+  .glow-primary {
+    box-shadow: 
+      0 0 20px hsl(var(--glow-primary) / 0.15),
+      0 0 60px hsl(var(--glow-primary) / 0.06);
+  }
+
+  .glow-primary-sm {
+    box-shadow: 0 0 10px hsl(var(--glow-primary) / 0.2);
+  }
+
+  .glow-accent {
+    box-shadow: 
+      0 0 20px hsl(var(--glow-accent) / 0.15),
+      0 0 60px hsl(var(--glow-accent) / 0.06);
+  }
+
+  /* Hex pattern background */
+  .hex-pattern {
+    background-image: 
+      radial-gradient(circle at 25% 25%, hsl(var(--glow-primary) / 0.03) 1px, transparent 1px),
+      radial-gradient(circle at 75% 75%, hsl(var(--glow-accent) / 0.02) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* Grid overlay */
+  .grid-overlay {
+    background-image: 
+      linear-gradient(hsl(var(--chain-color) / 0.3) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--chain-color) / 0.3) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.4);
+}
+
+/* Blockchain chain-link animation */
+@keyframes chain-flow {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes orbit {
+  0% { transform: rotate(0deg) translateX(60px) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(60px) rotate(-360deg); }
+}
+
+@keyframes hash-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes node-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--glow-primary) / 0.4); }
+  50% { box-shadow: 0 0 0 12px hsl(var(--glow-primary) / 0); }
+}
+
+@keyframes block-stack {
+  0% { transform: translateY(20px) scale(0.95); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
