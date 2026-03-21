@@ -48,6 +48,8 @@ contract MultiSigBudget {
         emit Deposit(msg.sender, msg.value);
     }
 
+//     const [deployer] = await ethers.getSigners();
+// deployer.address
 
     // propose budget 
     function proposeBudget(address payable _recipient, uint256 _amount) external onlyManager {

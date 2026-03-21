@@ -1,0 +1,8 @@
+{
+    "MultiSigBudget":{
+        "address": "0x490eDdb4F21cF923D6510D1b35f320f7b506d577",
+        "chainId": "11155111",
+        "network": "sepolia",
+        "deployer":"0x9f77a0c62CefcD939d100296e13dD67CB3dfAdAC"
+    }
+}

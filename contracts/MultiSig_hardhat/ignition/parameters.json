@@ -1,0 +1,11 @@
+{
+  "MultiSigBudget": {
+    "managers": [
+      "0x9f77a0c62CefcD939d100296e13dD67CB3dfAdAC",
+      "0xD6CB9c0410dbA01f0C4793917Ae9443eCA2aE7eF",
+      "0xC1Fc8297d2BF28748Fc309afA68F54b9a10FC767",
+      "0x7653D4fEE4849eD31045C74b6cc43Ccf691407eC",
+      "0x5268d61AddB759bE44e21172168519d4Ecac83D2"
+    ]
+  }
+}
