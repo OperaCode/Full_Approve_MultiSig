@@ -59,6 +59,7 @@ export interface MultiSigBudgetInterface extends Interface {
       | "isManager"
       | "managers"
       | "proposeBudget"
+      | "releaseBudget"
   ): FunctionFragment;
 
   getEvent(
@@ -105,6 +106,10 @@ export interface MultiSigBudgetInterface extends Interface {
     functionFragment: "proposeBudget",
     values: [AddressLike, BigNumberish]
   ): string;
+  encodeFunctionData(
+    functionFragment: "releaseBudget",
+    values: [BigNumberish]
+  ): string;
 
   decodeFunctionResult(functionFragment: "approvals", data: BytesLike): Result;
   decodeFunctionResult(
@@ -125,6 +130,10 @@ export interface MultiSigBudgetInterface extends Interface {
   decodeFunctionResult(functionFragment: "managers", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "proposeBudget",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "releaseBudget",
     data: BytesLike
   ): Result;
 }
@@ -299,6 +308,12 @@ export interface MultiSigBudget extends BaseContract {
     "nonpayable"
   >;
 
+  releaseBudget: TypedContractMethod<
+    [_budgetId: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
@@ -361,6 +376,9 @@ export interface MultiSigBudget extends BaseContract {
     [void],
     "nonpayable"
   >;
+  getFunction(
+    nameOrSignature: "releaseBudget"
+  ): TypedContractMethod<[_budgetId: BigNumberish], [void], "nonpayable">;
 
   getEvent(
     key: "BudgetApproved"

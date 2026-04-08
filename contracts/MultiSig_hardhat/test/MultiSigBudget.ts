@@ -138,11 +138,11 @@ describe("MultiSigBudget", () => {
       .to.be.revertedWithCustomError(multiSigBudget, "AlreadyApproved");
   });
 
-  it("reverts on 5th approval if funds are insufficient", async () => {
+  it("keeps approvals when underfunded, then allows manual release later", async () => {
     const { multiSigBudget, owner, recipient, M3, M4, M5 } =
       await loadFixture(deployFixture);
 
-    const tooMuch = ethers.parseEther("1000"); // > 100 funded
+    const tooMuch = ethers.parseEther("150"); // > 100 funded initially
     await multiSigBudget.connect(owner).proposeBudget(recipient.address, tooMuch);
     const budgetId = 0;
 
@@ -152,8 +152,24 @@ describe("MultiSigBudget", () => {
     await multiSigBudget.connect(M4).approveBudget(budgetId);
     await multiSigBudget.connect(M5).approveBudget(budgetId);
 
-    // 5th triggers release -> InsufficientFunds
+    // 5th approval succeeds, but release is pending due to low balance.
     await expect(multiSigBudget.connect(recipient).approveBudget(budgetId))
-      .to.be.revertedWithCustomError(multiSigBudget, "InsufficientFunds");
+      .to.emit(multiSigBudget, "BudgetApproved");
+
+    let budget = (await multiSigBudget.getBudgets())[budgetId];
+    expect(budget.approvals).to.equal(5n);
+    expect(budget.released).to.equal(false);
+
+    // Top up funds and release manually.
+    await owner.sendTransaction({
+      to: await multiSigBudget.getAddress(),
+      value: ethers.parseEther("60"),
+    });
+
+    await expect(multiSigBudget.connect(owner).releaseBudget(budgetId))
+      .to.emit(multiSigBudget, "BudgetReleased");
+
+    budget = (await multiSigBudget.getBudgets())[budgetId];
+    expect(budget.released).to.equal(true);
   });
 });

@@ -86,13 +86,21 @@ contract MultiSigBudget {
 
         emit BudgetApproved(_budgetId, msg.sender);
 
-        if (budget.approvals == managers.length) {
-            releaseBudget(_budgetId);
+        // Auto-release only when fully approved and currently funded.
+        // If not funded yet, managers can call releaseBudget later after funding.
+        if (budget.approvals == managers.length && address(this).balance >= budget.amount) {
+            _releaseBudget(_budgetId);
         }
     }
 
-    // Release Funds in a Budget  
-    function releaseBudget(uint256 _budgetId) internal onlyManager {
+    // Release funds for a fully approved budget. Can be called manually later.
+    function releaseBudget(uint256 _budgetId) external onlyManager {
+        _releaseBudget(_budgetId);
+    }
+
+    // Internal release routine used by both approval flow and manual execution.
+    function _releaseBudget(uint256 _budgetId) internal {
+        if (_budgetId >= budgets.length) revert InvalidBudgetId();
         Budget storage budget = budgets[_budgetId];
 
         if (budget.approvals < managers.length) revert ApprovalPending();
