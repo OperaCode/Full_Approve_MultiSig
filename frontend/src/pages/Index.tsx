@@ -11,7 +11,7 @@ import { HashTicker } from "@/components/HashTicker";
 import { Hexagon, Wallet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-// ─── Mock Data ─────────────────────────────────────────────
+// ─── Mock Data
 const MOCK_ADDRESS = "0x742d35Cc6634C0532925a3b844Bc9e7595f2bD68";
 
 const MOCK_MANAGERS = [
@@ -74,7 +74,7 @@ const MOCK_EVENTS: MockEvent[] = [
 
 const MOCK_BALANCE = "12.4530";
 
-// ─── Page ──────────────────────────────────────────────────
+// Page
 const Index = () => {
   const approvedCount = MOCK_BUDGETS.filter(
     (b) => b.approvals === MOCK_MANAGERS.length && !b.released

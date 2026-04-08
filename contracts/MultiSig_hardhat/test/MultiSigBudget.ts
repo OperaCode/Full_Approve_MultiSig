@@ -41,6 +41,36 @@ describe("MultiSigBudget", () => {
     expect(members[0]).to.equal(managers[0].address);
   });
 
+  it("reverts deployment when a manager is zero address", async () => {
+    const signers = await ethers.getSigners();
+    const MultiSigBudget = await ethers.getContractFactory("MultiSigBudget");
+
+    await expect(
+      MultiSigBudget.deploy([
+        signers[0].address,
+        signers[1].address,
+        signers[2].address,
+        signers[3].address,
+        ethers.ZeroAddress,
+      ])
+    ).to.be.revertedWithCustomError(MultiSigBudget, "InvalidManagerAddress");
+  });
+
+  it("reverts deployment when managers contain duplicates", async () => {
+    const signers = await ethers.getSigners();
+    const MultiSigBudget = await ethers.getContractFactory("MultiSigBudget");
+
+    await expect(
+      MultiSigBudget.deploy([
+        signers[0].address,
+        signers[1].address,
+        signers[2].address,
+        signers[3].address,
+        signers[0].address,
+      ])
+    ).to.be.revertedWithCustomError(MultiSigBudget, "DuplicateManager");
+  });
+
   it("allows a manager to propose a budget", async () => {
     const { multiSigBudget, owner, recipient } = await loadFixture(deployFixture);
 
@@ -54,6 +84,22 @@ describe("MultiSigBudget", () => {
     expect(budgets[0].amount).to.equal(amount);
     expect(budgets[0].approvals).to.equal(0n);
     expect(budgets[0].released).to.equal(false);
+  });
+
+  it("reverts proposing a budget with zero recipient", async () => {
+    const { multiSigBudget, owner } = await loadFixture(deployFixture);
+
+    await expect(
+      multiSigBudget.connect(owner).proposeBudget(ethers.ZeroAddress, ethers.parseEther("1"))
+    ).to.be.revertedWithCustomError(multiSigBudget, "InvalidRecipient");
+  });
+
+  it("reverts proposing a budget with zero amount", async () => {
+    const { multiSigBudget, owner, recipient } = await loadFixture(deployFixture);
+
+    await expect(
+      multiSigBudget.connect(owner).proposeBudget(recipient.address, 0)
+    ).to.be.revertedWithCustomError(multiSigBudget, "InvalidAmount");
   });
 
   it("allows managers to approve and auto-releases on 5th approval", async () => {
@@ -111,4 +157,3 @@ describe("MultiSigBudget", () => {
       .to.be.revertedWithCustomError(multiSigBudget, "InsufficientFunds");
   });
 });
-

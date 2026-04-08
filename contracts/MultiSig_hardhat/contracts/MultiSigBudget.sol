@@ -35,10 +35,16 @@ contract MultiSigBudget {
     error BudgetAlreadyReleased();
     error InsufficientFunds();
     error ApprovalPending();
+    error InvalidManagerAddress();
+    error DuplicateManager();
+    error InvalidRecipient();
+    error InvalidAmount();
 
     constructor(address[] memory _managers) {
         require(_managers.length == 5, "Must have exactly 5 managers");
         for (uint256 i = 0; i < _managers.length; i++) {
+            if (_managers[i] == address(0)) revert InvalidManagerAddress();
+            if (isManager[_managers[i]]) revert DuplicateManager();
             managers.push(_managers[i]);
             isManager[_managers[i]] = true;
         }
@@ -53,6 +59,9 @@ contract MultiSigBudget {
 
     // propose budget 
     function proposeBudget(address payable _recipient, uint256 _amount) external onlyManager {
+        if (_recipient == address(0)) revert InvalidRecipient();
+        if (_amount == 0) revert InvalidAmount();
+
         budgets.push(Budget({
             recipient: _recipient,
             amount: _amount,
@@ -98,7 +107,7 @@ contract MultiSigBudget {
 
     // Fetch status of a Budget
     function getBudgetStatus(uint256 _budgetId) external view returns (address recipient, uint256 amount, uint256 approvalCount, uint256 timestamp) {
-        require(_budgetId < budgets.length, "Invalid Budget ID");
+        if (_budgetId >= budgets.length) revert InvalidBudgetId();
         Budget storage budget = budgets[_budgetId];
         return (budget.recipient, budget.amount, budget.approvals, budget.timestamp);
     }

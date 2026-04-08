@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/raphaelfaboyinde/Desktop/web3bridge/FullApprove_MS/contracts/MultiSig_hardhat/contracts/MultiSigBudget.sol": {
-      "lastModificationDate": 1774059257275,
-      "contentHash": "c7fef9b8942e4d41e5f2e431bf88867a",
+      "lastModificationDate": 1775680321852,
+      "contentHash": "5cf70894def38921e29ff507e4519785",
       "sourceName": "contracts/MultiSigBudget.sol",
       "solcConfig": {
         "version": "0.8.28",
