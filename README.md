@@ -46,33 +46,6 @@ FullApprove_MS/
 **Chain ID:** `11155111`
 **Deployer:** `0x9f77a0c62CefcD939d100296e13dD67CB3dfAdAC`
 
-### Key Functions
-
-| Function | Access | Description |
-|---|---|---|
-| `proposeBudget(recipient, amount)` | Manager only | Propose a new budget |
-| `approveBudget(budgetId)` | Manager only | Approve a pending budget |
-| `releaseBudget(budgetId)` | Manager only | Manually release a fully approved budget |
-| `getBudgets()` | Public | Return all budgets |
-| `getBudgetStatus(budgetId)` | Public | Return status of a single budget |
-| `getmanagers()` | Public | Return the list of 5 managers |
-
-### Events
-
-| Event | Emitted when |
-|---|---|
-| `Deposit(sender, amount)` | ETH is sent to the contract |
-| `BudgetProposed(budgetId, recipient, amount)` | A new budget is proposed |
-| `BudgetApproved(budgetId, approver)` | A manager approves a budget |
-| `BudgetReleased(budgetId, recipient, amount)` | Funds are transferred |
-
----
-
-## Prerequisites
-
-- [Node.js](https://nodejs.org/) v18+
-- [MetaMask](https://metamask.io/) browser extension
-- Sepolia testnet ETH (via a faucet)
 
 ---
 
@@ -125,10 +98,6 @@ cd frontend
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser.
-
-Connect MetaMask to the **Sepolia** testnet before interacting with the contract.
-
 ---
 
 ## Smart Contract Development
@@ -155,16 +124,6 @@ npx hardhat ignition deploy ignition/modules/<module-file> --network sepolia
 After deployment, update `deployments/sepolia.json` with the new address, and update `CONTRACT_ADDRESS` in `frontend/src/lib/contract.ts`.
 
 ---
-
-## Frontend
-
-Built with:
-- **React 18** + **TypeScript**
-- **Vite** (bundler)
-- **Tailwind CSS** + **Shadcn/ui** (styling)
-- **Ethers.js v6** (blockchain interaction)
-- **TanStack React Query** (data fetching)
-- **React Hook Form** + **Zod** (form handling and validation)
 
 ### Available scripts
 
